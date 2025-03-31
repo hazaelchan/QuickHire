@@ -96,8 +96,7 @@ const Post = ({ post }) => {
           <div className="flex justify-end gap-2">
             <button
               onClick={() => toast.dismiss(t.id)}
-              // CHANGED: Updated button background for a softer gray tone
-              className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-md text-sm"
+              className="px-3 py-1 bg-gray-200 rounded-md text-sm"
             >
               Cancel
             </button>
@@ -160,7 +159,7 @@ const Post = ({ post }) => {
       },
     })
     setShowOptions(false)
-  }
+  } 
 
   const openMediaModal = (media) => {
     setSelectedMedia(media)
@@ -168,20 +167,20 @@ const Post = ({ post }) => {
   }
 
   return (
-    // CHANGED: Updated container background to bg-gray-50 and dark mode to dark:bg-gray-700
-    <div className="mb-6 overflow-hidden animate-slide-up bg-gray-50 dark:bg-gray-700 rounded-lg shadow">
+    // Main post container using a white background for a clean look
+    <div className="mb-6 overflow-hidden animate-slide-up rounded-lg shadow bg-white">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <Link to={`/profile/${post?.author?.username}`} className="flex items-center group">
             <img
               src={post.author.profilePicture || "/avatar.png"}
               alt={post.author.name}
-              className="w-12 h-12 rounded-full mr-3 border-2 border-white dark:border-gray-600 shadow-sm group-hover:shadow-md transition-all"
+              className="w-12 h-12 rounded-full mr-3 border-2 border-white shadow-sm group-hover:shadow-md transition-all"
             />
             <div>
-              <h3 className="font-semibold group-hover:text-blue-600 transition-colors">{post.author.name}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{post.author.headline}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <h3 className="font-semibold group-hover:text-blue-600 transition-colors text-gray-900">{post.author.name}</h3>
+              <p className="text-xs text-gray-500">{post.author.headline}</p>
+              <p className="text-xs text-gray-500">
                 {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
               </p>
             </div>
@@ -190,18 +189,18 @@ const Post = ({ post }) => {
           <div className="relative" ref={optionsRef}>
             <button
               onClick={() => setShowOptions(!showOptions)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-400 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition-colors"
             >
               <MoreHorizontal size={20} />
             </button>
 
             {showOptions && (
-              // CHANGED: Updated options menu background to match container colors
-              <div className="absolute right-0 mt-2 w-48 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg py-2 z-10 animate-fade-in">
+              // Options menu with white background
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10 animate-fade-in">
                 {isOwner && (
                   <button
                     onClick={handleDeletePost}
-                    className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center"
+                    className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100 flex items-center"
                   >
                     <Trash2 size={16} className="mr-2" />
                     Delete post
@@ -209,7 +208,7 @@ const Post = ({ post }) => {
                 )}
                 <button
                   onClick={handleCopyLink}
-                  className="w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center"
+                  className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center"
                 >
                   <LinkIcon size={16} className="mr-2" />
                   Copy link to post
@@ -220,7 +219,7 @@ const Post = ({ post }) => {
         </div>
 
         {/* Post Content */}
-        <p className="mb-4 break-words whitespace-pre-wrap overflow-hidden text-gray-800 dark:text-gray-200">
+        <p className="mb-4 break-words whitespace-pre-wrap overflow-hidden text-gray-800">
           {post.content}
         </p>
 
@@ -229,9 +228,7 @@ const Post = ({ post }) => {
             {post.media.map((mediaItem, index) => (
               <div
                 key={index}
-                className={`relative w-full overflow-hidden rounded-lg cursor-pointer transform transition-transform hover:scale-[1.02] ${
-                  post.media.length === 1 ? "aspect-auto" : "aspect-square"
-                }`}
+                className={`relative w-full overflow-hidden rounded-lg cursor-pointer transform transition-transform hover:scale-[1.02] ${post.media.length === 1 ? "aspect-auto" : "aspect-square"}`}
                 onClick={() => openMediaModal(mediaItem)}
               >
                 {mediaItem.type === "image" ? (
@@ -258,12 +255,12 @@ const Post = ({ post }) => {
           </div>
         )}
 
-        <div className="flex items-center justify-between text-gray-500 dark:text-gray-400 border-t border-b border-gray-200 dark:border-gray-600 py-1 my-2">
+        <div className="flex items-center justify-between text-gray-500 border-t border-b border-gray-200 py-1 my-2">
           <div className="flex items-center">
             {likeCount > 0 && (
               <div className="flex items-center text-xs">
-                <div className="bg-blue-100 dark:bg-blue-900 p-1 rounded-full">
-                  <ThumbsUp size={12} className="text-blue-500 dark:text-blue-400" />
+                <div className="bg-blue-100 p-1 rounded-full">
+                  <ThumbsUp size={12} className="text-blue-500" />
                 </div>
                 <span className="ml-1">{likeCount}</span>
               </div>
@@ -272,19 +269,19 @@ const Post = ({ post }) => {
           {comments.length > 0 && (
             <button
               onClick={() => setShowComments(!showComments)}
-              className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+              className="text-xs text-gray-500 hover:text-gray-700 transition-colors"
             >
               {comments.length} {comments.length === 1 ? "comment" : "comments"}
             </button>
           )}
         </div>
 
-        <div className="flex justify-between text-gray-600 dark:text-gray-300 pt-1">
+        <div className="flex justify-between text-gray-600 pt-1">
           <PostAction
             icon={
               <ThumbsUp
                 size={18}
-                className={isLiked ? "text-blue-500 dark:text-blue-400" : ""}
+                className={isLiked ? "text-blue-500" : ""}
               />
             }
             text={isLiked ? "Liked" : "Like"}
@@ -354,10 +351,10 @@ const Post = ({ post }) => {
 
         {showComments && (
           <div className="mt-4">
-            <h4 className="mb-2 font-semibold text-gray-700 dark:text-gray-300">Comments</h4>
+            <h4 className="mb-2 font-semibold text-gray-900">Comments</h4>
             {comments.map((comment) => (
-              // CHANGED: Updated comment card background to bg-gray-100 and dark mode to dark:bg-gray-600
-              <div key={comment._id} className="mb-2 p-2 rounded-md bg-gray-100 dark:bg-gray-600">
+              // Comment card with a white background that blends into the post
+              <div key={comment._id} className="mb-2 p-2 rounded-md bg-white shadow border border-gray-100">
                 <div className="flex items-start">
                   <img
                     src={comment.user?.profilePicture || "/avatar.png"}
@@ -365,9 +362,9 @@ const Post = ({ post }) => {
                     className="w-8 h-8 rounded-full mr-2"
                   />
                   <div>
-                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{comment.user?.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{comment.content}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-sm font-medium text-gray-900">{comment.user?.name}</p>
+                    <p className="text-xs text-gray-600">{comment.content}</p>
+                    <p className="text-xs text-gray-500">
                       {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
                     </p>
                   </div>
@@ -380,11 +377,10 @@ const Post = ({ post }) => {
                 alt={authUser?.name}
                 className="w-8 h-8 rounded-full mr-2"
               />
-              {/* CHANGED: Updated input background for a softer tone */}
               <input
                 type="text"
                 placeholder="Add a comment..."
-                className="flex-grow p-2 rounded-full bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-grow p-2 rounded-full bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-300"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               />
@@ -398,18 +394,16 @@ const Post = ({ post }) => {
             </form>
           </div>
         )}
-      </div>''
+      </div>
       {showMediaModal && selectedMedia && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
-          {/* Updated modal background with a more appealing color scheme */}
-          <div className="relative max-w-4xl max-h-[90vh] w-full bg-blue-50 dark:bg-indigo-900 rounded-xl overflow-hidden">
+          <div className="relative max-w-4xl max-h-[90vh] w-full bg-white rounded-xl overflow-hidden">
             <button
               onClick={() => setShowMediaModal(false)}
               className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white rounded-full p-1 hover:bg-opacity-70 transition-all"
             >
               <X size={24} />
             </button>
-
             <div className="h-full flex items-center justify-center">
               {selectedMedia.type === "image" ? (
                 <img
